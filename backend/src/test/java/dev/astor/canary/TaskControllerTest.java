@@ -23,6 +23,14 @@ class TaskControllerTest {
 	}
 
 	@Test
+	void dueEndpointReturnsTheBoundedTaskIdentity() throws Exception {
+		mockMvc.perform(get("/api/tasks/due").param("referenceDate", "2026-08-13"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].id").value(1))
+				.andExpect(jsonPath("$[0].title").value("Ship canary"));
+	}
+
+	@Test
 	void dueEndpointWithoutReferenceDateReturnsBadRequest() throws Exception {
 		mockMvc.perform(get("/api/tasks/due"))
 				.andExpect(status().isBadRequest());

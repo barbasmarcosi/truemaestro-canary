@@ -12,19 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-	private static final List<Task> FIXED_TASKS = List.of(new Task(LocalDate.of(2026, 8, 13)));
+	private static final List<Task> FIXED_TASKS = List.of(
+			new Task(1, "Ship canary", LocalDate.of(2026, 8, 13)));
 
 	@GetMapping("/due")
 	public List<TaskResponse> due(@RequestParam LocalDate referenceDate) {
 		return FIXED_TASKS.stream()
-				.map(task -> new TaskResponse(task.dueDate(),
+				.map(task -> new TaskResponse(task.id(), task.title(), task.dueDate(),
 						TaskClassifier.classify(task.dueDate(), referenceDate)))
 				.toList();
 	}
 
-	private record Task(LocalDate dueDate) {
+	private record Task(long id, String title, LocalDate dueDate) {
 	}
 
-	private record TaskResponse(LocalDate dueDate, TaskDueStatus dueStatus) {
+	private record TaskResponse(long id, String title, LocalDate dueDate, TaskDueStatus dueStatus) {
 	}
 }
