@@ -10,6 +10,8 @@ public final class TaskClassifier {
 	public static TaskDueStatus classify(LocalDate dueDate, LocalDate referenceDate) {
 		if (dueDate.isBefore(referenceDate)) {
 			return TaskDueStatus.OVERDUE;
+		} else if (dueDate.isEqual(referenceDate)) {
+			return TaskDueStatus.DUE_TODAY;
 		}
 		return TaskDueStatus.UPCOMING;
 	}
