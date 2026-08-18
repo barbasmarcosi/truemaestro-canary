@@ -11,6 +11,9 @@ public final class TaskClassifier {
 		if (dueDate.isBefore(referenceDate)) {
 			return TaskDueStatus.OVERDUE;
 		}
+		if (dueDate.isEqual(referenceDate)) {
+			return TaskDueStatus.DUE_TODAY;
+		}
 		return TaskDueStatus.UPCOMING;
 	}
 }
